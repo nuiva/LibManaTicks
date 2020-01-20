@@ -26,7 +26,7 @@ function LibManaTicks.RegisterCallback(self, e, f)
 	table.insert(triggers[e], f)
 end
 
-function TriggerEvent(e)
+local function TriggerEvent(e)
 	if triggers[e] == nil then return end
 	for _,f in pairs(triggers[e]) do
 		f(e)
