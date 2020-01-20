@@ -27,10 +27,9 @@ function LibManaTicks.RegisterCallback(self, e, f)
 end
 
 function TriggerEvent(e)
-	local a = triggers[e]
-	if a == nil then return end
-	for _,v in pairs(a) do
-		v(e)
+	if triggers[e] == nil then return end
+	for _,f in pairs(triggers[e]) do
+		f(e)
 	end
 end
 
@@ -54,7 +53,6 @@ local function ManaTick(isReal)
 end
 
 local batch = {
-	t = 0,
 	spellCast = false,
 	lostMana = false,
 }
@@ -85,7 +83,6 @@ f:SetScript("OnUpdate", function()
 		TriggerEvent("Spellcast")
 	end
 	batch = {
-		t = t,
 		spellCast = false,
 		lostMana = false,
 	}
