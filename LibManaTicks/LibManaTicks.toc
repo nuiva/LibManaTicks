@@ -1,0 +1,8 @@
+## Interface: 11303
+## Title: LibManaTicks
+## Notes: Provides mana tick events.
+## Author: nuiva
+## Version: 1.0
+## SavedVariables:
+
+LibManaTicks.lua
