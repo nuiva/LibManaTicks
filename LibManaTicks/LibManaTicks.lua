@@ -53,13 +53,19 @@ local f = CreateFrame("Frame")
 
 f:SetScript("OnEvent", function(self, e, ...)
 	if e == "COMBAT_LOG_EVENT_UNFILTERED" then
-		local _, a, _, sourceGUID, _, _, _, targetGUID = CombatLogGetCurrentEventInfo()
-		if a == "SPELL_ENERGIZE" and targetGUID == playerGUID then
-			energizeRejectUntil = GetTime() + batchWindow + batchError
-		elseif a == "SPELL_LEECH" and sourceGUID == playerGUID then
-			energizeRejectUntil = GetTime() + 3 * batchWindow + batchError
-		elseif a == "SPELL_CAST_SUCCESS" and sourceGUID == playerGUID then
-			batch.spellCast = true
+		local a = {CombatLogGetCurrentEventInfo()}
+		if a[2] == "SPELL_ENERGIZE" or a[2] == "SPELL_PERIODIC_ENERGIZE" then
+			if a[8] == playerGUID and a[17] == 0 then -- a[17] is powerType
+				energizeRejectUntil = GetTime() + batchWindow + batchError -- based on Life Tap test
+			end
+		elseif a[2] == "SPELL_LEECH" or a[2] == "SPELL_PERIODIC_LEECH" then
+			if a[4] == playerGUID and a[16] == 0 then -- a[16] is powerType
+				energizeRejectUntil = GetTime() + 3 * batchWindow + batchError -- based on Dark Pact test
+			end
+		elseif a[2] == "SPELL_CAST_SUCCESS" then
+			if a[4] == playerGUID then
+				batch.spellCast = true
+			end
 		end
 	elseif e == "UNIT_POWER_UPDATE" then
 		if ... ~= "player" then return end
