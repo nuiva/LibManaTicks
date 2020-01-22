@@ -1,6 +1,7 @@
 
 if LibManaTicks ~= nil then return end
 local _, playerClass = UnitClass("player")
+if playerClass == "WARRIOR" or playerClass == "ROGUE" then return end
 local playerGUID = UnitGUID("player")
 
 local batchWindow = 0.4 -- seconds, spell batch length
@@ -20,10 +21,6 @@ function LibManaTicks.RegisterCallback(self, e, f)
 		triggers[e] = {}
 	end
 	table.insert(triggers[e], f)
-end
-
-if playerClass == "WARRIOR" or playerClass == "ROGUE" then
-	LibManaTicks
 end
 
 local function TriggerEvent(e)
