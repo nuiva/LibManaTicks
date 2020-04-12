@@ -1,7 +1,7 @@
 ## Interface: 11303
 ## Title: LibManaTicks
 ## Notes: Provides mana tick events.
-## Author: nuiva
+## Author: tilkku
 ## Version: 1.0
 ## SavedVariables:
 
